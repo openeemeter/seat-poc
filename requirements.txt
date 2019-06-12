@@ -1,4 +1,4 @@
 dash==0.43.0  
 dash-daq==0.1.0
 pandas==0.24.2
-gunicorn
+gunicorn==19.9.0
