@@ -318,9 +318,6 @@ def set_building_type(selected_building_type, selected_ecm, num_clicks, past_cli
         savings = "%s%%" % str(round(savings, 1))
 
 
-
-
-
     return projects, map_figure, savings, str(num_clicks)
     
 
