@@ -6,9 +6,11 @@ import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
 
-
 # Take advantage of Plotly's built-in small CSS framework:
 # https://codepen.io/chriddyp/pen/bWLwgP.css
+
+# Really useful repo for looking up Dash patterns:
+# https://github.com/plotly/dash-recipes/
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -107,7 +109,7 @@ app.layout = html.Div([
                 disabled=True
             ),
 
-            html.H2("Accuracy / Epsilon", style={"margin-top": "40px"}),
+            html.H2("Accuracy", style={"margin-top": "40px"}),
 
             html.P(""" 
 
@@ -121,11 +123,10 @@ app.layout = html.Div([
                 dcc.Slider(
                     min=1,
                     max=20,
-                    marks={i: str(i) for i in range(1, 21)},
                     value=5,
                     id="accuracy-slider"
                 ),
-            ], style={"padding": "15px 0"}),
+            ], style={"padding": "15px 0 0 0"}),
 
             html.Div([
 
@@ -143,7 +144,7 @@ app.layout = html.Div([
 
                 html.P("Percentage of personal privacy budget this query will consume", className="help")
 
-            ], style={"margin": "40px 0 0 0"}),
+            ], style={"margin": "10px 0 0 0"}),
 
             html.Div([
                 html.Button("Submit Query", id="submit", className="button-primary"),
