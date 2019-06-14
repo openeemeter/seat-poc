@@ -4,7 +4,7 @@ SEAT Proof of Concept
 A proof of concept of a system for privacy-preserving interactive queries of energy 
 efficiency analytics.
 
-![Screenshot](/screenshot.jpg)
+![Screenshot](/screenshot.png)
 
 Deployed here:
 https://seat-poc.herokuapp.com
