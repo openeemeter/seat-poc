@@ -229,6 +229,7 @@ app.layout = html.Div(
                             [
                                 html.H3("-", id="average-savings"),
                                 html.P("Average Savings"),
+                                html.P("at 95% confidence", className="help")
                             ],
                             className="numberEmphasisChart",
                         ),
@@ -353,10 +354,11 @@ def update_map_data(building_type, ecm):
     [
         dash.dependencies.State("past-clicks", "children"),
         dash.dependencies.State("accuracy-slider", "value"),
+        dash.dependencies.State("savings-accuracy", "children")
     ],
 )
 def set_building_type(
-    selected_building_type, selected_ecm, num_clicks, past_clicks, accuracy_value
+    selected_building_type, selected_ecm, num_clicks, past_clicks, accuracy_value, savings_accuracy
 ):
     projects, savings, map_figure = update_map_data(
         selected_building_type, selected_ecm
@@ -386,7 +388,8 @@ def set_building_type(
         noise = np.random.laplace(0, b)
 
         savings += noise
-        savings = "%s%%" % str(round(savings, 1))
+        savings = "%s%% " % str(round(savings, 1))
+        savings += savings_accuracy
 
     return projects, map_figure, savings, str(num_clicks)
 
