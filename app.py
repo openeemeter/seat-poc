@@ -268,17 +268,14 @@ app.layout = html.Div(
     ],
 )
 def update_accuracy(value, N):
-
-    # TODO: compute the error exactly
-
     N = int(N)
-
     e = value / 100.0
-
     df = 100 / N
     b = df / e
-    s = np.random.laplace(0, b, 50000)
-    error = np.quantile(s, 0.975) * 2
+
+    # Compute error using quantile function of laplace
+    error = -b * np.log(2 - 2 * 0.975)
+    error *= 2
 
     return "±" + str(round(error, 1)) + "%"
 
