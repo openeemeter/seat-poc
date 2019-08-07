@@ -278,7 +278,7 @@ def update_accuracy(value, N):
     df = 100 / N
     b = df / e
     s = np.random.laplace(0, b, 50000)
-    error = np.quantile(s, 0.975)
+    error = np.quantile(s, 0.975) * 2
 
     return "±" + str(round(error, 1)) + "%"
 
