@@ -3,6 +3,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
+import plotly.express as px
 import pandas as pd
 import numpy as np
 
@@ -14,9 +15,7 @@ import numpy as np
 
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
-mapbox_access_token = (
-    "pk.eyJ1Ijoib3BlbmVlIiwiYSI6ImNqd3NnMnBucjF0ZDQ0YW84MG02aHRpbnkifQ.zHzYA-F7AYOJylDC7wY-Uw"
-)
+mapbox_access_token = "pk.eyJ1Ijoib3BlbmVlIiwiYSI6ImNqd3NnMnBucjF0ZDQ0YW84MG02aHRpbnkifQ.zHzYA-F7AYOJylDC7wY-Uw"
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -180,8 +179,26 @@ app.layout = html.Div(
                                     ]
                                 ),
                                 html.P(
-                                    "95% confidence interval for Average Savings result. Smaller is better.",
+                                    children=[
+                                        "95% confidence interval for Average Savings result. Smaller is better."
+                                    ],
                                     className="help",
+                                ),
+                                html.P(
+                                    children=[html.A("More →", id="more-accuracy")],
+                                    className="help",
+                                ),
+                                html.Div(
+                                    [
+                                        html.Div(
+                                            [
+                                                dcc.Graph(
+                                                    id="accuracy-graph",
+                                                    config={"displayModeBar": False},
+                                                )
+                                            ]
+                                        )
+                                    ]
                                 ),
                                 html.P(
                                     children=[
@@ -229,7 +246,7 @@ app.layout = html.Div(
                             [
                                 html.H3("-", id="average-savings"),
                                 html.P("Average Savings"),
-                                html.P("at 95% confidence", className="help")
+                                html.P("at 95% confidence", className="help"),
                             ],
                             className="numberEmphasisChart",
                         ),
@@ -261,7 +278,10 @@ app.layout = html.Div(
 
 
 @app.callback(
-    dash.dependencies.Output("savings-accuracy", "children"),
+    [
+        dash.dependencies.Output("savings-accuracy", "children"),
+        dash.dependencies.Output("accuracy-graph", "figure"),
+    ],
     [
         dash.dependencies.Input("accuracy-slider", "value"),
         dash.dependencies.Input("total-projects", "children"),
@@ -270,6 +290,7 @@ app.layout = html.Div(
 def update_accuracy(value, N):
     N = int(N)
     e = value / 100.0
+
     df = 100 / N
     b = df / e
 
@@ -277,14 +298,33 @@ def update_accuracy(value, N):
     error = -b * np.log(2 - 2 * 0.975)
     error *= 2
 
-    return "±" + str(round(error, 1)) + "%"
+    # Update accuracy plot
+    samples = np.random.laplace(0, b, 5000)
+    trace = go.Histogram(
+        x=samples,
+        opacity=0.7,
+        name="Male",
+        marker={"line": {"color": "#25232C", "width": 0.2}},
+        nbinsx=70,
+        customdata=samples,
+        histnorm="probability",
+    )
+    layout = go.Layout(
+        xaxis={"title": "Error %", "showgrid": False},
+        yaxis={"title": "Probability", "showgrid": False},
+        margin={"l": 50, "b": 30, "t": 30, "r": 10},
+        height=150,
+    )
+    figure2 = {"data": [trace], "layout": layout}
+
+    return ("±" + str(round(error, 1)) + "%", figure2)
 
 
 @app.callback(
     dash.dependencies.Output("privacy-cost", "children"),
     [dash.dependencies.Input("accuracy-slider", "value")],
 )
-def update_accuracy(value):
+def update_privacy_cost(value):
 
     # We budget here using Basic Composition
     # Each user has a budget of epsilon = 4 and we assume
@@ -351,11 +391,16 @@ def update_map_data(building_type, ecm):
     [
         dash.dependencies.State("past-clicks", "children"),
         dash.dependencies.State("accuracy-slider", "value"),
-        dash.dependencies.State("savings-accuracy", "children")
+        dash.dependencies.State("savings-accuracy", "children"),
     ],
 )
 def set_building_type(
-    selected_building_type, selected_ecm, num_clicks, past_clicks, accuracy_value, savings_accuracy
+    selected_building_type,
+    selected_ecm,
+    num_clicks,
+    past_clicks,
+    accuracy_value,
+    savings_accuracy,
 ):
     projects, savings, map_figure = update_map_data(
         selected_building_type, selected_ecm
@@ -389,6 +434,17 @@ def set_building_type(
         savings += savings_accuracy
 
     return projects, map_figure, savings, str(num_clicks)
+
+
+@app.callback(
+    dash.dependencies.Output("accuracy-graph", "style"),
+    [dash.dependencies.Input("more-accuracy", "n_clicks")],
+)
+def toggle_accuracy_graph(clicks):
+    if clicks is None or clicks % 2 == 0:
+        return {"display": "none"}
+    else:
+        return {"display": "block"}
 
 
 if __name__ == "__main__":
