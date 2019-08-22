@@ -5,6 +5,10 @@ h1 { font-size: 24px; }
 h2 { font-size: 20px; }
 h3 { font-size: 16px; }
 
+.brand { color: #67b5b3; display: inline-block; margin: 0px 20px 0 0; }
+.nav { padding: 15px; background-color: #121212; }
+.nav a { display: inline-block; margin-right: 15px; color: #777; text-decoration: none; font-size: 12px; }
+.nav a.active { color: #eee; border-bottom: 3px solid #4da1f1; }
 .headerContainer { background: #fafafa; border-bottom: 1px solid rgba(34,36,38,.15); padding: 20px 15px 10px 15px; }
 .headerSubtitle { color: #67b5b3; margin-top: 0;}
 .headerTitle { font-weight: 700; }
