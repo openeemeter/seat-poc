@@ -5,7 +5,9 @@ import dash_html_components as html
 import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
+from scipy import stats
 from app import app, df, mapbox_access_token
+
 
 @app.callback(
     [
@@ -30,13 +32,17 @@ def update_accuracy(value, N):
 
     # Update accuracy plot
     samples = np.random.laplace(0, b, 5000)
-    trace = go.Histogram(
-        x=samples,
+
+    xs = np.linspace(-6, 6)
+    ys = stats.laplace.pdf(xs, loc=0, scale=b)
+
+    trace = go.Line(
+        x=xs,
         opacity=0.7,
         name="Male",
         marker={"line": {"color": "#25232C", "width": 0.2}},
         nbinsx=70,
-        customdata=samples,
+        customdata=ys,
         histnorm="probability",
     )
     layout = go.Layout(
@@ -48,8 +54,6 @@ def update_accuracy(value, N):
     figure2 = {"data": [trace], "layout": layout}
 
     return ("±" + str(round(error, 1)) + "%", figure2)
-
-
 
 
 @app.callback(
@@ -173,9 +177,6 @@ def set_building_type(
     [dash.dependencies.Input("more-accuracy", "n_clicks")],
 )
 def toggle_accuracy_graph(clicks):
-
-    return {"display": "block"}
-
     if clicks is None or clicks % 2 == 0:
         return {"display": "none"}
     else:

@@ -22,3 +22,5 @@ h3 { font-size: 16px; }
 .numberEmphasisChart h3 { font-size: 28px; }
 .resultsContainer { margin: 0; }
 .resultsContainer h2 { padding-left: 20px; }
+
+.rc-slider-tooltip-inner { background-color: white; color: #333; box-shadow: none; }
