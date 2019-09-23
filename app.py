@@ -18,11 +18,10 @@ mapbox_access_token = "pk.eyJ1Ijoib3BlbmVlIiwiYSI6ImNqd3NnMnBucjF0ZDQ0YW84MG02aH
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
-# app.config.suppress_callback_exceptions = True
 
 df = pd.read_csv("assets/sf_buildings_clean.csv")
 
-from layouts import app_layout
+from layouts import efficiency_impact_layout, building_energy_models_layout
 
 container_layout = html.Div(
     [dcc.Location(id="url", refresh=False), html.Div(id="page-content")]
@@ -33,7 +32,8 @@ def serve_layout():
         return container_layout
     return html.Div([
         container_layout,
-        app_layout
+        efficiency_impact_layout,
+        building_energy_models_layout,
     ])
 
 app.layout = serve_layout
@@ -44,15 +44,14 @@ app.layout = serve_layout
 )
 def display_page(pathname):
     if pathname == "/":
-        return app_layout
+        return efficiency_impact_layout
     elif pathname == "/building-energy-models":
-        return app_layout
+        return building_energy_models_layout
     else:
         return "404"
 
 
 from callbacks import *
-
 
 if __name__ == "__main__":
     app.run_server(debug=True)

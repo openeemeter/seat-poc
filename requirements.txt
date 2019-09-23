@@ -2,3 +2,4 @@ dash==1.1.1
 dash-daq==0.1.0
 pandas==0.24.2
 gunicorn==19.9.0
+uszipcode==0.2.2
