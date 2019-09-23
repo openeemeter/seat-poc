@@ -198,6 +198,7 @@ layout = html.Div(
                                                     [
                                                         dcc.Graph(
                                                             id="accuracy-graph",
+                                                            style={"display": "none"},
                                                             config={
                                                                 "displayModeBar": False
                                                             },

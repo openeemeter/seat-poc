@@ -33,16 +33,13 @@ def update_accuracy(value, N):
     # Update accuracy plot
     samples = np.random.laplace(0, b, 5000)
 
-    xs = np.linspace(-6, 6)
-    ys = stats.laplace.pdf(xs, loc=0, scale=b)
-
-    trace = go.Line(
-        x=xs,
+    trace = go.Histogram(
+        x=samples,
         opacity=0.7,
         name="Male",
         marker={"line": {"color": "#25232C", "width": 0.2}},
         nbinsx=70,
-        customdata=ys,
+        customdata=samples,
         histnorm="probability",
     )
     layout = go.Layout(
