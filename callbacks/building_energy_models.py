@@ -152,7 +152,7 @@ def update_accuracy(value, N, output_id):
     error *= 2
 
     # Update accuracy plot
-    xs = np.linspace(-6, 6, 5000)
+    xs = np.linspace(-error, error, 5000)
     ys = stats.laplace.pdf(xs, loc=0, scale=b)
 
     ys = ys * (1.0 / np.sum(ys))
