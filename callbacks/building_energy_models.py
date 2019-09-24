@@ -159,7 +159,7 @@ def update_accuracy(value, N, output_id):
 
     trace = go.Scatter(x=xs, y=ys, mode="lines")
     layout = go.Layout(
-        xaxis={"title": "Error %", "showgrid": False},
+        xaxis={"title": "Error", "showgrid": False},
         yaxis={
             "title": "Probability",
             "showgrid": False,
@@ -171,7 +171,7 @@ def update_accuracy(value, N, output_id):
     )
     figure2 = {"data": [trace], "layout": layout}
 
-    return ("±" + str(round(error, 1)), figure2)
+    return ("±" + str(round(error, 2)), figure2)
 
 
 @app.callback(
@@ -181,3 +181,18 @@ def update_accuracy(value, N, output_id):
 def handle_output_choice(output_id):
     output = outputs[output_id]
     return (output["label"],)
+
+
+@app.callback(
+    dash.dependencies.Output("bem-privacy-cost", "children"),
+    [dash.dependencies.Input("bem-accuracy-slider", "value")],
+)
+def update_privacy_cost(value):
+
+    # We budget here using Basic Composition
+    # Each user has a budget of epsilon = 4 and we assume
+    # Parallel Composition with non-overlapping queries.
+
+    e = value / 4
+
+    return str(e) + "%"

@@ -199,7 +199,7 @@ layout = html.Div(
                                                 html.Span(
                                                     "1.2%",
                                                     className="fancyValue",
-                                                    id="privacy-cost",
+                                                    id="bem-privacy-cost",
                                                 ),
                                             ]
                                         ),
