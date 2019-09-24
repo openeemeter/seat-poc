@@ -155,8 +155,6 @@ def update_accuracy(value, N, output_id):
     xs = np.linspace(-error, error, 5000)
     ys = stats.laplace.pdf(xs, loc=0, scale=b)
 
-    ys = ys * (1.0 / np.sum(ys))
-
     trace = go.Scatter(x=xs, y=ys, mode="lines")
     layout = go.Layout(
         xaxis={"title": "Error", "showgrid": False},

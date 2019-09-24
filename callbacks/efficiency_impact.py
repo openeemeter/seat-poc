@@ -31,20 +31,18 @@ def update_accuracy(value, N):
     error *= 2
 
     # Update accuracy plot
-    samples = np.random.laplace(0, b, 5000)
+    xs = np.linspace(-error, error, 5000)
+    ys = stats.laplace.pdf(xs, loc=0, scale=b)
 
-    trace = go.Histogram(
-        x=samples,
-        opacity=0.7,
-        name="Male",
-        marker={"line": {"color": "#25232C", "width": 0.2}},
-        nbinsx=70,
-        customdata=samples,
-        histnorm="probability",
-    )
+    trace = go.Scatter(x=xs, y=ys, mode="lines")
     layout = go.Layout(
-        xaxis={"title": "Error %", "showgrid": False},
-        yaxis={"title": "Probability", "showgrid": False},
+        xaxis={"title": "Error", "showgrid": False},
+        yaxis={
+            "title": "Probability",
+            "showgrid": False,
+            "ticks": "",
+            "showticklabels": False,
+        },
         margin={"l": 50, "b": 30, "t": 30, "r": 10},
         height=150,
     )
