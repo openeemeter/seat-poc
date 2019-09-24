@@ -142,9 +142,9 @@ layout = html.Div(
                                         zip_code,
                                     ]
                                 ),
-                                html.H2("Output", style={"margin-top": "40px"}),
+                                html.H2("Output", style={"marginTop": "40px"}),
                                 html.Div([output_selector]),
-                                html.H2("Accuracy", style={"margin-top": "40px"}),
+                                html.H2("Accuracy", style={"marginTop": "40px"}),
                                 html.P(""),
                                 html.Div(
                                     [
@@ -178,21 +178,15 @@ layout = html.Div(
                                             ],
                                             className="help",
                                         ),
-                                        html.P(
-                                            children=[
-                                                html.A("More →", id="bem-more-accuracy")
-                                            ],
-                                            className="help",
-                                        ),
                                         html.Div(
                                             [
                                                 html.Div(
                                                     [
                                                         dcc.Graph(
-                                                            id="bem-accuracy-graph",
-                                                            style={"display": "none"},
+                                                            id="bem-accuracy-graph"
                                                         )
-                                                    ]
+                                                    ],
+                                                    id="bem-accuracy-graph-container",
                                                 )
                                             ]
                                         ),
@@ -258,7 +252,7 @@ layout = html.Div(
                             className="six columns resultsContainer",
                         ),
                     ],
-                    className="six columns",
+                    className="six columns leftContainer",
                 ),
                 html.Div(
                     [
@@ -269,7 +263,7 @@ layout = html.Div(
                         )
                     ],
                     className="six columns",
-                    style={"margin-left": "0", "width": "50%"},
+                    style={"marginLeft": "0", "width": "50%"},
                 ),
             ]
         ),

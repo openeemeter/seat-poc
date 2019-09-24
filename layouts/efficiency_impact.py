@@ -147,7 +147,7 @@ layout = html.Div(
                                     style={},
                                     disabled=True,
                                 ),
-                                html.H2("Accuracy", style={"margin-top": "40px"}),
+                                html.H2("Accuracy", style={"marginTop": "40px"}),
                                 html.P(
                                     """ 
 
@@ -186,19 +186,12 @@ layout = html.Div(
                                             ],
                                             className="help",
                                         ),
-                                        html.P(
-                                            children=[
-                                                html.A("More →", id="more-accuracy")
-                                            ],
-                                            className="help",
-                                        ),
                                         html.Div(
                                             [
                                                 html.Div(
                                                     [
                                                         dcc.Graph(
                                                             id="accuracy-graph",
-                                                            style={"display": "none"},
                                                             config={
                                                                 "displayModeBar": False
                                                             },
@@ -277,7 +270,7 @@ layout = html.Div(
                         )
                     ],
                     className="six columns",
-                    style={"margin-left": "0", "width": "50%"},
+                    style={"marginLeft": "0", "width": "50%"},
                 ),
             ]
         ),

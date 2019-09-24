@@ -167,14 +167,3 @@ def set_building_type(
         savings += savings_accuracy
 
     return projects, map_figure, savings, str(num_clicks)
-
-
-@app.callback(
-    dash.dependencies.Output("accuracy-graph", "style"),
-    [dash.dependencies.Input("more-accuracy", "n_clicks")],
-)
-def toggle_accuracy_graph(clicks):
-    if clicks is None or clicks % 2 == 0:
-        return {"display": "none"}
-    else:
-        return {"display": "block"}

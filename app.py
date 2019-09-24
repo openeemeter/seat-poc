@@ -27,16 +27,17 @@ container_layout = html.Div(
     [dcc.Location(id="url", refresh=False), html.Div(id="page-content")]
 )
 
+
 def serve_layout():
     if flask.has_request_context():
         return container_layout
-    return html.Div([
-        container_layout,
-        efficiency_impact_layout,
-        building_energy_models_layout,
-    ])
+    return html.Div(
+        [container_layout, efficiency_impact_layout, building_energy_models_layout]
+    )
+
 
 app.layout = serve_layout
+
 
 @app.callback(
     dash.dependencies.Output("page-content", "children"),

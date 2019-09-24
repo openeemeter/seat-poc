@@ -175,17 +175,6 @@ def update_accuracy(value, N, output_id):
 
 
 @app.callback(
-    dash.dependencies.Output("bem-accuracy-graph", "style"),
-    [dash.dependencies.Input("bem-more-accuracy", "n_clicks")],
-)
-def toggle_accuracy_graph(clicks):
-    if clicks is None or clicks % 2 == 0:
-        return {"display": "none"}
-    else:
-        return {"display": "block"}
-
-
-@app.callback(
     dash.dependencies.Output("bem-output-label", "children"),
     [dash.dependencies.Input("bem-output-choice", "value")],
 )
