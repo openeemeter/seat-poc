@@ -229,7 +229,7 @@ layout = html.Div(
                                 html.Div(
                                     [
                                         html.H3("845", id="bem-total-projects"),
-                                        html.P("Total Projects"),
+                                        html.P("Sites Matched"),
                                     ],
                                     className="numberEmphasisChart",
                                 ),
